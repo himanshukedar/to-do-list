@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title">My Lists</h1>
+        <form action="{{ url_for('add_list') }}" method="POST" class="d-flex mb-4">
+            <input type="text" name="list_name" class="form-control me-2" placeholder="Create a new list..." required>
+            <button type="submit" class="btn btn-primary">Create List</button>
+        </form>
+
+        <div class="list-group">
+            {% for list in lists %}
+            <a href="{{ url_for('list_detail', list_id=list.id) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                {{ list.name }}
+                <span class="badge bg-primary rounded-pill">{{ list.tasks|length }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex align-items-center mb-3">
+    <a href="{{ url_for('home') }}" class="btn btn-secondary me-3">← Back to Lists</a>
+    <h1>{{ list_item.name }}</h1>
+    <a href="{{ url_for('delete_list', list_id=list_item.id) }}" class="btn btn-sm btn-outline-danger ms-auto">Delete
+        This List</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="card-title">Tasks</h2>
+        <form action="{{ url_for('add_task', list_id=list_item.id) }}" method="POST" class="d-flex mb-4">
+            <input type="text" name="task_name" class="form-control me-2" placeholder="Add a new task..." required>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+
+        <ul class="list-group">
+            {% for task in list_item.tasks %}
+            <!-- list_detail.html ke andar ka for loop -->
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Task ka content -->
+                    <span>
+                        {% if task.completed %}<del>{{ task.content }}</del>{% else %}{{ task.content }}{% endif %}
+                    </span>
+                    <!-- Done/Delete buttons -->
+                    <div>
+                        <a href="{{ url_for('update_task', task_id=task.id) }}" class="btn btn-sm btn-success">
+                            {% if task.completed %} Undo {% else %} Done {% endif %}
+                        </a>
+                        <a href="{{ url_for('delete_task', task_id=task.id) }}"
+                            class="btn btn-sm btn-danger ms-2">Delete</a>
+                    </div>
+                </div>
+                <!-- Naya hissa: Tags dikhane aur add karne ke liye -->
+                <div class="mt-2">
+                    <!-- Maujooda tags dikhana -->
+                    {% for tag in task.tags %}
+                    <span class="badge bg-secondary">{{ tag.name }}</span>
+                    {% endfor %}
+                    <!-- Naya tag add karne ka form -->
+                    <form action="{{ url_for('add_tag', task_id=task.id) }}" method="POST" class="d-inline-flex ms-2">
+                        <input type="text" name="tag_name" class="form-control form-control-sm" placeholder="Add tag..."
+                            style="width: 100px;">
+                        <button type="submit" class="btn btn-sm btn-outline-primary ms-1">+</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
