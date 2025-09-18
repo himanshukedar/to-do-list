@@ -87,6 +87,7 @@ del { color: rgba(255, 255, 255, 0.6); }
 
 .navbar {
     background-color: transparent !important;
+
 }
 .navbar-brand, .nav-link, .navbar-text {
     color: var(--text-light) !important;
@@ -99,8 +100,12 @@ del { color: rgba(255, 255, 255, 0.6); }
 .nav-link:hover {
     color: var(--neon-accent) !important;
     text-shadow: 0 0 5px var(--neon-accent);
+    
 }
-
+.nav-link{
+    box-shadow: 0px 25px 50px;
+    padding: 15px 6px;
+}
 .badge {
     transition: transform 0.2s ease;
 }
