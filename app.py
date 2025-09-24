@@ -99,7 +99,6 @@ def add_task(list_id):
     new_task = Todo(content=task_content, list_id=list_item.id)
     db.session.add(new_task)
     db.session.commit()
-    flash('New task added!', 'success')
     return redirect(url_for('list_detail', list_id=list_id))
 
 # Task ko update aur delete karne ki logic (redirects badal gaye)
@@ -198,5 +197,10 @@ def add_tag(task_id):
         flash(f'Tag "{tag_name}" added!', 'success')
         
     return redirect(url_for('list_detail', list_id=task.list_id))
+
+from app import app, db
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
     app.run(debug=True)
