@@ -162,7 +162,7 @@ def edit_task(id):
     task = Todo.query.get_or_404(id)
 
     # Check if the task belongs to the current user
-    if task.owner != current_user:
+    if task.list.owner != current_user:
         return 'Unauthorized', 403
 
     if request.method == 'POST':
